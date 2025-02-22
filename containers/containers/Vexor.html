@@ -1,0 +1,78 @@
+<div class="container">
+  <!-- Иконка Vexor -->
+  <img src="https://viktor.github.io/containers/Vexor.png" alt="Vexor Icon" style="width:64px; height:64px; margin-bottom: 10px;">
+
+  <!-- Заголовок -->
+  <h2>Vexor 100ab</h2>
+
+  <!-- Ссылка на график "Его цифры" -->
+  <p><strong>Его цифры:</strong></p>
+  <a href="https://viktor.github.io/containers/Vexor100аб.jpg" target="_blank">
+    <img src="https://viktor.github.io/containers/Vexor100аб.jpg" alt="Vexor Stats" style="max-width: 100%; max-height: 200px;">
+  </a>
+
+  <!-- Основная информация -->
+  <p>
+    1. Он не заходит первым. Это корабль огневой поддержки.<br>
+    2. В карго джамелка на случай, если будет очевидно, враг стоит в есс “в клозине с сетками” - “Бурстим” и оттапливаем на перегретом аб.<br>
+    3. Пулемёт — управлять дронами, которые могут передать Вам в асист. Вы же дроновод =)
+  </p>
+
+  <!-- Ссылки -->
+  <p><strong>Дополнительные ссылки:</strong></p>
+  <ul>
+    <li><a href="https://br.evetools.org/related/30003689/202307242100" target="_blank">Ссылка 1</a></li>
+    <li><a href="https://br.evetools.org/related/30002920/202308131400" target="_blank">Ссылка 2</a></li>
+    <li><a href="https://br.evetools.org/related/30003681/202307231600" target="_blank">Ссылка 3</a></li>
+    <li><a href="https://br.evetools.org/related/30002001/202301311700" target="_blank">Ссылка 4</a></li>
+    <li><a href="https://br.evetools.org/br/66a64425534cdb00117e69ea" target="_blank">Ссылка 5</a></li>
+    <li><a href="https://zkillboard.com/kill/121554951/" target="_blank">Ссылка 6</a></li>
+    <li><a href="https://zkillboard.com/kill/124071710/" target="_blank">Ссылка 7</a></li>
+  </ul>
+
+  <!-- Кнопка для копирования фита в EFT -->
+  <p><strong>Фит в EFT:</strong></p>
+  <button onclick="copyEftFit()">Скопировать фит EFT в буфер</button>
+
+  <!-- Фит в EFT (скрытый текст) -->
+  <textarea id="eft-fit" style="display:none;">
+[Vexor, 100ab]
+Damage Control II
+Signal Amplifier II
+Drone Damage Amplifier II
+Drone Damage Amplifier II
+Drone Damage Amplifier II
+Large Shield Extender II
+Drone Navigation Computer II
+Large Shield Extender II
+100MN Monopropellant Enduring Afterburner
+125mm Gatling AutoCannon II
+Drone Link Augmentor II
+[Empty High slot]
+[Empty High slot]
+Medium Core Defense Field Extender I
+Medium EM Shield Reinforcer I
+Medium Core Defense Field Extender I
+
+Hobgoblin II x1
+Warrior II x5
+Hammerhead II x2
+Ogre II x2
+Hornet EC-300 x5
+
+Nanite Repair Paste x37
+Republic Fleet EMP S x339
+Burst Jammer II x1
+Core Probe Launcher I x1
+  </textarea>
+
+  <!-- JavaScript для копирования текста -->
+  <script>
+    function copyEftFit() {
+      const eftFit = document.getElementById('eft-fit').value;
+      navigator.clipboard.writeText(eftFit)
+        .then(() => alert('Фит EFT успешно скопирован!'))
+        .catch(() => alert('Не удалось скопировать фит EFT.'));
+    }
+  </script>
+</div>
