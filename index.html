@@ -1,27 +1,46 @@
-<script>
-  function loadNav() {
-    fetch('/nav.html') // Используем абсолютный путь для GitHub Pages
-      .then(response => {
-        if (!response.ok) throw new Error('Ошибка загрузки nav.html');
-        return response.text();
-      })
-      .then(data => {
-        document.getElementById('nav-placeholder').innerHTML = data;
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Каталог кораблей</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <script>
+    function loadNav() {
+      fetch('/nav.html') // Используем абсолютный путь для GitHub Pages
+        .then(response => {
+          if (!response.ok) throw new Error('Ошибка загрузки nav.html');
+          return response.text();
+        })
+        .then(data => {
+          document.getElementById('nav-placeholder').innerHTML = data;
 
-        // Логика сворачивания (без звука)
-        const details = document.querySelectorAll('details');
-        details.forEach((detail) => {
-          detail.addEventListener('toggle', () => {
-            if (detail.open) {
-              details.forEach((otherDetail) => {
-                if (otherDetail !== detail) {
-                  otherDetail.removeAttribute('open');
-                }
-              });
-            }
+          // Логика сворачивания (без звука)
+          const details = document.querySelectorAll('details');
+          details.forEach((detail) => {
+            detail.addEventListener('toggle', () => {
+              if (detail.open) {
+                details.forEach((otherDetail) => {
+                  if (otherDetail !== detail) {
+                    otherDetail.removeAttribute('open');
+                  }
+                });
+              }
+            });
           });
-        });
-      })
-      .catch(error => console.error(error));
-  }
-</script>
+        })
+        .catch(error => console.error(error));
+    }
+  </script>
+</head>
+<body onload="loadNav()">
+  <header>
+    <h1>Каталог кораблей</h1>
+  </header>
+  <div id="nav-placeholder"></div>
+  <main>
+    <h2>Добро пожаловать!</h2>
+    <p>Это каталог кораблей и флотов. Выберите раздел в навигации, чтобы узнать больше.</p>
+  </main>
+</body>
+</html>
