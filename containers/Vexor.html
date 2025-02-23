@@ -8,7 +8,10 @@
   <script>
     function loadNav() {
       fetch('../../nav.html')
-        .then(response => response.text())
+        .then(response => {
+          if (!response.ok) throw new Error('Ошибка загрузки nav.html');
+          return response.text();
+        })
         .then(data => {
           document.getElementById('nav-placeholder').innerHTML = data;
           const navLinks = document.querySelectorAll('nav a');
@@ -31,25 +34,26 @@
               }
             });
           });
-        });
+        })
+        .catch(error => console.error(error));
     }
   </script>
 </head>
 <body onload="loadNav()">
   <header>
-    <a href="../../index.html">Главная страница</a>
+    <a href="/index.html">Главная страница</a>
     <h1>Vexor</h1>
   </header>
   <div id="nav-placeholder"></div>
   <audio id="hoverSound">
-    <source src="../../images/1.mp3" type="audio/mpeg">
+    <source src="/images/1.mp3" type="audio/mpeg">
     Ваш браузер не поддерживает аудио.
   </audio>
   <main>
     <div class="container">
       <h2>Информация о Vexor</h2>
       <p>Здесь будет информация о корабле Vexor.</p>
-      <img src="../../images/0RTTdWIsDYs.jpg" alt="Vexor" style="max-width: 100%;">
+      <img src="/images/0RTTdWIsDYs.jpg" alt="Vexor" style="max-width: 100%;">
     </div>
   </main>
 </body>
