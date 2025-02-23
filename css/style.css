@@ -71,14 +71,12 @@ nav {
 nav a {
   color: #2c3e50;
   text-decoration: none;
-  transition: background-color 0.3s, color 0.3s; /* Плавный переход для подсветки */
+  transition: font-weight 0.3s, font-style 0.3s; /* Плавный переход для шрифта */
 }
 
 nav a:hover, nav details summary:hover {
-  background-color: #3498db; /* Подсветка синим при наведении */
-  color: white;
-  padding: 5px;
-  border-radius: 3px;
+  font-weight: bold; /* Жирный шрифт при наведении */
+  font-style: italic; /* Курсив при наведении */
 }
 
 nav ul {
@@ -91,6 +89,6 @@ nav details {
 }
 
 nav details[open] summary {
-  background-color: #2980b9; /* Подсветка открытого раздела */
-  color: white;
+  font-weight: bold; /* Жирный шрифт для открытого раздела */
+  color: #2980b9; /* Лёгкая цветовая подсветка для открытого раздела */
 }
