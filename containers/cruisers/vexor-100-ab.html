@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vexor 100 ab</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <script>
+    function loadNav() {
+      fetch('../../nav.html')
+        .then(response => {
+          if (!response.ok) throw new Error('Ошибка загрузки nav.html');
+          return response.text();
+        })
+        .then(data => {
+          document.getElementById('nav-placeholder').innerHTML = data;
+
+          // Логика сворачивания (без звука)
+          const details = document.querySelectorAll('details');
+          details.forEach((detail) => {
+            detail.addEventListener('toggle', () => {
+              if (detail.open) {
+                details.forEach((otherDetail) => {
+                  if (otherDetail !== detail) {
+                    otherDetail.removeAttribute('open');
+                  }
+                });
+              }
+            });
+          });
+        })
+        .catch(error => console.error(error));
+    }
+
+    // Функция для копирования фита EFT в буфер обмена
+    function copyFitToClipboard(fitText) {
+      navigator.clipboard.writeText(fitText).then(() => {
+        alert("Фит скопирован в буфер обмена!");
+      }).catch(err => {
+        console.error("Ошибка копирования: ", err);
+      });
+    }
+  </script>
+</head>
+<body onload="loadNav()">
+  <header>
+    <a href="/index.html">Главная страница</a>
+    <h1 data-ship-name="Vexor 100 ab">Vexor 100 ab</h1>
+  </header>
+  <div id="nav-placeholder"></div>
+  <main>
+    <div class="container">
+      <h2>Информация о Vexor 100 ab</h2>
+      <img data-ship-avatar src="/images/vexor-100-ab_avatar.png" alt="Vexor 100 ab" style="max-width: 100%;">
+      <p data-ship-description>Сценарий:
+Я иду на помощь +ому флоту с которым нет коммуникаций защищать ess
+Или, товарищи просили дать дпс для кемпа гайки в режиме “полуафк”.
+Или, “я краб! я за дронами следить могу! и чтобы самого не поймали! я жаден, корабль мне за копейки! и что бы карго пустое - для лута! и чтобы без всяких там кнопочек!”
+===========
+1 он не заходит первым. Это корабль огневой поддержки.
+2 В карго джамелка на случай если будет очевидно, враг стоит в есс “в клозине с сетками” -  “Бурстим” и оттапливаем на перегретом аб.
+3 пулемет - управлять дронами которые могут передать Вам в асист. Вы же дроновод =)
+</p>
+      <div data-ship-link><a href="https://br.evetools.org/related/30003689/202307242100" target="_blank">https://br.evetools.org/related/30003689/202307242100</a><br><a href="https://br.evetools.org/related/30002920/202308131400" target="_blank">https://br.evetools.org/related/30002920/202308131400</a><br><a href="https://br.evetools.org/related/30003681/202307231600" target="_blank">https://br.evetools.org/related/30003681/202307231600</a><br><a href="https://br.evetools.org/related/30002001/202301311700" target="_blank">https://br.evetools.org/related/30002001/202301311700</a><br><a href="https://br.evetools.org/br/66a64425534cdb00117e69ea" target="_blank">https://br.evetools.org/br/66a64425534cdb00117e69ea</a><br><a href="https://zkillboard.com/kill/121554951/" target="_blank">https://zkillboard.com/kill/121554951/</a><br><a href="https://zkillboard.com/kill/124071710/" target="_blank">https://zkillboard.com/kill/124071710/</a></div>
+      <button onclick="copyFitToClipboard('[Vexor, 100ab]
+Damage Control II
+Signal Amplifier II
+Drone Damage Amplifier II
+Drone Damage Amplifier II
+Drone Damage Amplifier II
+
+Large Shield Extender II
+Drone Navigation Computer II
+Large Shield Extender II
+100MN Monopropellant Enduring Afterburner
+
+125mm Gatling AutoCannon II
+Drone Link Augmentor II
+[Empty High slot]
+[Empty High slot]
+
+Medium Core Defense Field Extender I
+Medium EM Shield Reinforcer I
+Medium Core Defense Field Extender I
+
+
+Hobgoblin II x1
+Warrior II x5
+Hammerhead II x2
+Ogre II x2
+Hornet EC-300 x5
+
+
+Nanite Repair Paste x37
+Republic Fleet EMP S x339
+Burst Jammer II x1
+Core Probe Launcher I x1
+')">Скопировать фит EFT</button>
+      <img src="/images/vexor-100-ab_graph.jpg" alt="Графики возможностей Vexor 100 ab" style="max-width: 100%;">
+    </div>
+  </main>
+</body>
+<style>
+  [data-ship-link] a {
+    display: inline-block;
+    margin-right: 10px;
+    margin-bottom: 5px;
+    color: #2c3e50;
+    text-decoration: none;
+  }
+  [data-ship-link] a:hover {
+    text-decoration: underline;
+  }
+</style>
+</html>
