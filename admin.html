@@ -24,7 +24,7 @@
   <script>
     function generateShipPage() {
       const formData = new FormData(document.querySelector('form'));
-      fetch('http://localhost:3000/generate-ship', { // Замени на URL твоего сервера
+      fetch('http://localhost:3000/generate-ship', { // Отправка на локальный сервер
         method: 'POST',
         body: formData
       })
