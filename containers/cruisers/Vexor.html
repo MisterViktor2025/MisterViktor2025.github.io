@@ -14,14 +14,8 @@
         })
         .then(data => {
           document.getElementById('nav-placeholder').innerHTML = data;
-          const navLinks = document.querySelectorAll('nav a');
-          navLinks.forEach(link => {
-            link.addEventListener('mouseover', () => {
-              document.getElementById('hoverSound').play();
-            });
-          });
 
-          // Логика сворачивания
+          // Логика сворачивания (без звука)
           const details = document.querySelectorAll('details');
           details.forEach((detail) => {
             detail.addEventListener('toggle', () => {
@@ -37,23 +31,31 @@
         })
         .catch(error => console.error(error));
     }
+
+    // Функция для копирования фита EFT в буфер обмена
+    function copyFitToClipboard(fitText) {
+      navigator.clipboard.writeText(fitText).then(() => {
+        alert("Фит скопирован в буфер обмена!");
+      }).catch(err => {
+        console.error("Ошибка копирования: ", err);
+      });
+    }
   </script>
 </head>
 <body onload="loadNav()">
   <header>
     <a href="/index.html">Главная страница</a>
-    <h1>Vexor</h1>
+    <h1 data-ship-name="Vexor">Vexor</h1> <!-- Данные для импорта -->
   </header>
   <div id="nav-placeholder"></div>
-  <audio id="hoverSound">
-    <source src="/images/1.mp3" type="audio/mpeg">
-    Ваш браузер не поддерживает аудио.
-  </audio>
   <main>
     <div class="container">
       <h2>Информация о Vexor</h2>
-      <p>Здесь будет информация о корабле Vexor.</p>
-      <img src="/images/0RTTdWIsDYs.jpg" alt="Vexor" style="max-width: 100%;">
+      <img data-ship-avatar src="/containers/cruisers/Vexor.png" alt="Vexor" style="max-width: 100%;"> <!-- Данные для импорта -->
+      <p data-ship-description>Здесь будет информация о корабле Vexor. (Восстанови или обнови описание через admin.html)</p> <!-- Данные для импорта -->
+      <a data-ship-link href="https://zkillboard.com/ship/[ID_Vexor]/" target="_blank">Примеры применения на zkillboard</a> <!-- Данные для импорта -->
+      <button onclick="copyFitToClipboard('[Vexor, Basic Fit]')">Скопировать фит EFT</button>
+      <img src="/images/[график_Vexor].png" alt="Графики возможностей Vexor" style="max-width: 100%;">
     </div>
   </main>
 </body>
