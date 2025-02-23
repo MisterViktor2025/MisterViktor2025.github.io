@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Хоум деф</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <script>
+    function loadNav() {
+      fetch('../nav.html')
+        .then(response => {
+          if (!response.ok) throw new Error('Ошибка загрузки nav.html');
+          return response.text();
+        })
+        .then(data => {
+          document.getElementById('nav-placeholder').innerHTML = data;
+
+          // Логика сворачивания (без звука)
+          const details = document.querySelectorAll('details');
+          details.forEach((detail) => {
+            detail.addEventListener('toggle', () => {
+              if (detail.open) {
+                details.forEach((otherDetail) => {
+                  if (otherDetail !== detail) {
+                    otherDetail.removeAttribute('open');
+                  }
+                });
+              }
+            });
+          });
+        })
+        .catch(error => console.error(error));
+    }
+
+    // Функция для импорта данных с страницы корабля
+    async function importShipData(shipUrl) {
+      try {
+        const response = await fetch(shipUrl);
+        if (!response.ok) throw new Error('Ошибка загрузки страницы корабля');
+        const html = await response.text();
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(html, 'text/html');
+
+        const shipName = doc.querySelector('h1[data-ship-name]').getAttribute('data-ship-name');
+        const shipAvatar = doc.querySelector('img[data-ship-avatar]').getAttribute('src');
+        const shipDescription = doc.querySelector('p[data-ship-description]').textContent;
+        const shipLink = shipUrl;
+
+        // Вставка данных в home_def.html
+        document.getElementById('ship-name').textContent = shipName;
+        document.getElementById('ship-avatar').src = shipAvatar;
+        document.getElementById('ship-description').textContent = shipDescription;
+        document.getElementById('ship-link').href = shipLink;
+      } catch (error) {
+        console.error('Ошибка импорта данных: ', error);
+      }
+    }
+
+    // Пример вызова для Vexor (или любого корабля)
+    window.onload = function() {
+      loadNav();
+      importShipData('/containers/cruisers/Vexor.html'); // Замени на любой URL корабля
+    };
+  </script>
+</head>
+<body onload="loadNav()">
+  <header>
+    <a href="/index.html">Главная страница</a>
+    <h1>Хоум деф</h1>
+  </header>
+  <div id="nav-placeholder"></div>
+  <main>
+    <div class="container">
+      <h2>Состав флота</h2>
+      <h3>Корабль: <span id="ship-name"></span></h3>
+      <img id="ship-avatar" alt="Аватарка корабля" style="max-width: 100%;">
+      <p id="ship-description"></p>
+      <a id="ship-link" href="#" target="_blank">Перейти на страницу корабля</a>
+    </div>
+  </main>
+</body>
+</html>
