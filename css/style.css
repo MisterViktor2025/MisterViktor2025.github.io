@@ -71,6 +71,14 @@ nav {
 nav a {
   color: #2c3e50;
   text-decoration: none;
+  transition: background-color 0.3s, color 0.3s; /* Плавный переход для подсветки */
+}
+
+nav a:hover, nav details summary:hover {
+  background-color: #3498db; /* Подсветка синим при наведении */
+  color: white;
+  padding: 5px;
+  border-radius: 3px;
 }
 
 nav ul {
@@ -80,4 +88,9 @@ nav ul {
 
 nav details {
   margin: 10px 0;
+}
+
+nav details[open] summary {
+  background-color: #2980b9; /* Подсветка открытого раздела */
+  color: white;
 }
