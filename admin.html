@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Административный инструмент — Генерация страниц кораблей</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <style>
+    .form-container { max-width: 800px; margin: 20px auto; padding: 20px; }
+    .form-group { margin-bottom: 15px; }
+    .form-group label { display: block; margin-bottom: 5px; }
+    .form-group input, .form-group textarea, .form-group select { width: 100%; padding: 8px; }
+    button { padding: 10px 20px; background-color: #2c3e50; color: white; border: none; cursor: pointer; }
+    button:hover { background-color: #34495e; }
+    nav a:hover, nav details summary:hover {
+      background-color: #3498db;
+      color: white;
+      padding: 5px;
+      border-radius: 3px;
+    }
+  </style>
+  <script>
+    function generateShipPage() {
+      const shipClass = document.getElementById('shipClass').value;
+      const shipName = document.getElementById('shipName').value;
+      const shipAvatar = document.getElementById('shipAvatar').files[0];
+      const shipDescription = document.getElementById('shipDescription').value;
+      const zkillLink = document.getElementById('zkillLink').value;
+      const fitEFT = document.getElementById('fitEFT').value;
+      const graphImage = document.getElementById('graphImage').files[0];
+
+      if (!shipClass || !shipName || !shipDescription) {
+        alert("Заполните обязательные поля: класс, название и описание корабля!");
+        return;
+      }
+
+      // Загрузка шаблона
+      fetch('/template_ship.html')
+        .then(response => {
+          if (!response.ok) throw new Error('Ошибка загрузки шаблона');
+          return response.text();
+        })
+        .then(template => {
+          // Замена placeholder'ов в шаблоне
+          let htmlContent = template
+            .replace(/\[Название корабля\]/g, shipName)
+            .replace('/images/[аватарка_корабля].png', `/images/${shipAvatar ? shipAvatar.name : 'default_ship.png'}`)
+            .replace('[Описание]', shipDescription)
+            .replace('[Ссылка на zkillboard]', zkillLink)
+            .replace('\[Фит EFT\]', fitEFT)
+            .replace('/images/[график_корабля].png', `/images/${graphImage ? graphImage.name : 'default_graph.png'}`);
+
+          // Сохранение файла локально (скачивание)
+          const folderPath = `/containers/${shipClass.toLowerCase()}/`;
+          const fileName = `${shipName}.html`;
+          const blob = new Blob([htmlContent], { type: 'text/html' });
+          const a = document.createElement('a');
+          a.href = URL.createObjectURL(blob);
+          a.download = fileName;
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+
+          // Симуляция сохранения изображений (ручная загрузка)
+          if (shipAvatar || graphImage) {
+            alert("Для сохранения изображений в /images/ потребуется серверный скрипт или локальное приложение. Загрузите изображения вручную в /images/ через GitHub Desktop и обновите пути.");
+          }
+
+          // Обновление nav.html (локально)
+          updateNavigation(shipClass, shipName);
+          alert(`Страница ${shipName} сгенерирована и сохранена как ${folderPath}${fileName}!`);
+        })
+        .catch(error => console.error('Ошибка генерации страницы: ', error));
+    }
+
+    function updateNavigation(shipClass, shipName) {
+      fetch('/nav.html')
+        .then(response => response.text())
+        .then(data => {
+          const parser = new DOMParser();
+          const navDoc = parser.parseFromString(data, 'text/html');
+          const ul = navDoc.querySelector(`details summary:contains("${shipClass}") + ul`);
+          if (ul) {
+            const li = document.createElement('li');
+            li.innerHTML = `<a href="/containers/${shipClass.toLowerCase()}/${shipName}.html">${shipName}</a>`;
+            ul.appendChild(li);
+            const newNav = navDoc.querySelector('nav').outerHTML;
+            const blob = new Blob([newNav], { type: 'text/html' });
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = 'nav.html';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+          }
+        });
+    }
+  </script>
+</head>
+<body>
+  <div class="form-container">
+    <h2>Генерация страницы корабля</h2>
+    <form onsubmit="event.preventDefault(); generateShipPage();">
+      <div class="form-group">
+        <label for="shipClass">Класс корабля:</label>
+        <select id="shipClass" required>
+          <option value="frigates">Фрегаты</option>
+          <option value="destroyers">Эсминцы</option>
+          <option value="cruisers">Крейсеры</option>
+          <option value="battleships">Линейные корабли</option>
+          <option value="battlecruisers">Линкоры</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="shipName">Название корабля (оно же название страницы):</label>
+        <input type="text" id="shipName" required>
+      </div>
+      <div class="form-group">
+        <label for="shipAvatar">Аватарка корабля (изображение):</label>
+        <input type="file" id="shipAvatar" accept="image/*">
+      </div>
+      <div class="form-group">
+        <label for="shipDescription">Описание:</label>
+        <textarea id="shipDescription" rows="4" required></textarea>
+      </div>
+      <div class="form-group">
+        <label for="zkillLink">Ссылка на zkillboard.com:</label>
+        <input type="url" id="zkillLink" placeholder="https://zkillboard.com/ship/[ID_корабля]/">
+      </div>
+      <div class="form-group">
+        <label for="fitEFT">Фит EFT (для копирования в буфер):</label>
+        <textarea id="fitEFT" rows="2" placeholder="[Корабль, Фит]"></textarea>
+      </div>
+      <div class="form-group">
+        <label for="graphImage">График возможностей (изображение):</label>
+        <input type="file" id="graphImage" accept="image/*">
+      </div>
+      <button type="submit">Создать страницу корабля</button>
+    </form>
+  </div>
+</body>
+</html>
