@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Мой Каталог</title>
+  <title>Vexor</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -12,12 +12,10 @@
       background-color: #f0f4f8;
     }
     header {
-      background-image: url('/images/0RTTdWIsDYs.jpg');
-      background-size: cover;
-      background-position: center;
+      background-color: #2c3e50;
       color: white;
+      padding: 10px; /* Уменьшаем padding */
       text-align: center;
-      padding: 20px;
     }
     main {
       padding: 20px;
@@ -39,7 +37,7 @@
   </style>
   <script>
     function loadNav() {
-      fetch('nav.html')
+      fetch('../nav.html')
         .then(response => response.text())
         .then(data => {
           document.getElementById('nav-placeholder').innerHTML = data;
@@ -61,17 +59,19 @@
 </head>
 <body onload="loadNav()">
   <header>
-    <h1>Комплектации кораблей и тактики EVE Online</h1>
+    <a href="../index.html">Главная страница</a> <!-- Исправленная ссылка на главную страницу -->
+    <h1>Vexor</h1>
   </header>
   <div id="nav-placeholder"></div>
   <audio id="hoverSound">
-    <source src="/images/1.mp3" type="audio/mpeg">
+    <source src="../../images/1.mp3" type="audio/mpeg">
     Your browser does not support the audio element.
   </audio>
   <main>
     <div class="container">
-      <h2>Добро пожаловать!</h2>
-      <p>Вся информация о комплектациях кораблей и тактиках их применения.</p>
+      <h2>Информация о Vexor</h2>
+      <p>Здесь будет информация о корабле Vexor.</p>
+      <!-- Памятка: Не забудьте добавить информацию и изображение -->
     </div>
   </main>
 </body>
