@@ -14,20 +14,8 @@
     header {
       background-color: #2c3e50;
       color: white;
-      padding: 20px;
+      padding: 10px; /* Уменьшаем padding */
       text-align: center;
-    }
-    nav {
-      background-color: #34495e;
-      padding: 10px;
-      display: flex;
-      justify-content: center;
-    }
-    nav a {
-      color: white;
-      margin: 0 15px;
-      text-decoration: none;
-      font-size: 18px;
     }
     main {
       padding: 20px;
@@ -47,30 +35,42 @@
       color: #666;
     }
   </style>
+  <script>
+    function loadNav() {
+      fetch('nav.html')
+        .then(response => response.text())
+        .then(data => {
+          document.getElementById('nav-placeholder').innerHTML = data;
+        });
+    }
+
+    function playSound() {
+      const sound = document.getElementById('hoverSound');
+      sound.play();
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      const navLinks = document.querySelectorAll('nav a');
+      navLinks.forEach(link => {
+        link.addEventListener('mouseover', playSound);
+      });
+    });
+  </script>
 </head>
-<body>
+<body onload="loadNav()">
   <header>
     <img src="/images/0RTTdWIsDYs.jpg" alt="Header Image" style="width: 100%; height: auto;">
     <h1>Комплектации кораблей и тактики EVE Online</h1>
   </header>
-  <nav>
-    <a href="#corps">Корабли</a>
-    <a href="#fleets">Флоты</a>
-  </nav>
+  <div id="nav-placeholder"></div>
+  <audio id="hoverSound">
+    <source src="/images/1.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
   <main>
-    <div id="corps" class="container">
-      <h2>Корабли</h2>
-      <ul>
-        <li><a href="containers/Vexor.html">Vexor</a></li>
-        <!-- Добавьте другие ссылки на корабли -->
-      </ul>
-    </div>
-    <div id="fleets" class="container">
-      <h2>Флоты</h2>
-      <ul>
-        <li><a href="fleets/fleet1.html">Флот 1</a></li>
-        <!-- Добавьте другие ссылки на флоты -->
-      </ul>
+    <div class="container">
+      <h2>Добро пожаловать!</h2>
+      <p>Вся информация о комплектациях кораблей и тактиках их применения.</p>
     </div>
   </main>
 </body>
