@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Vexor</title>
+  <title>Каталог кораблей</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -14,65 +14,49 @@
     header {
       background-color: #2c3e50;
       color: white;
-      padding: 10px; /* Уменьшаем padding */
+      padding: 10px;
       text-align: center;
     }
     main {
       padding: 20px;
       max-width: 800px;
-      margin: 0 auto;
+      margin: 20px auto;
       background-color: white;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
       border-radius: 8px;
     }
-    .container {
-      margin-bottom: 20px;
-    }
-    h2 {
-      color: #333;
-    }
-    p {
-      color: #666;
-    }
+    h2 { color: #333; }
+    p { color: #666; }
   </style>
   <script>
     function loadNav() {
-      fetch('../nav.html')
+      fetch('/nav.html')
         .then(response => response.text())
         .then(data => {
           document.getElementById('nav-placeholder').innerHTML = data;
+          // Добавляем обработчики после загрузки навигации
+          const navLinks = document.querySelectorAll('nav a');
+          navLinks.forEach(link => {
+            link.addEventListener('mouseover', () => {
+              document.getElementById('hoverSound').play();
+            });
+          });
         });
     }
-
-    function playSound() {
-      const sound = document.getElementById('hoverSound');
-      sound.play();
-    }
-
-    document.addEventListener('DOMContentLoaded', function() {
-      const navLinks = document.querySelectorAll('nav a');
-      navLinks.forEach(link => {
-        link.addEventListener('mouseover', playSound);
-      });
-    });
   </script>
 </head>
 <body onload="loadNav()">
   <header>
-    <a href="../index.html">Главная страница</a> <!-- Исправленная ссылка на главную страницу -->
-    <h1>Vexor</h1>
+    <h1>Каталог кораблей</h1>
   </header>
   <div id="nav-placeholder"></div>
   <audio id="hoverSound">
-    <source src="../../images/1.mp3" type="audio/mpeg">
-    Your browser does not support the audio element.
+    <source src="/images/1.mp3" type="audio/mpeg">
+    Ваш браузер не поддерживает аудио.
   </audio>
   <main>
-    <div class="container">
-      <h2>Информация о Vexor</h2>
-      <p>Здесь будет информация о корабле Vexor.</p>
-      <!-- Памятка: Не забудьте добавить информацию и изображение -->
-    </div>
+    <h2>Добро пожаловать!</h2>
+    <p>Это каталог кораблей и флотов. Выберите раздел в навигации, чтобы узнать больше.</p>
   </main>
 </body>
 </html>
