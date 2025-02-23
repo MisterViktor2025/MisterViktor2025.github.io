@@ -45,19 +45,30 @@
 <body onload="loadNav()">
   <header>
     <a href="/index.html">Главная страница</a>
-    <h1 data-ship-name="[Название корабля]">[Название корабля]</h1> <!-- Данные для импорта -->
+    <h1 data-ship-name="[Название корабля]">[Название корабля]</h1>
   </header>
   <div id="nav-placeholder"></div>
   <main>
     <div class="container">
       <h2>Информация о [Название корабля]</h2>
-      <img data-ship-avatar src="/images/[аватарка_корабля].png" alt="[Название корабля]" style="max-width: 100%;"> <!-- Данные для импорта -->
-      <p data-ship-description>[Описание]</p> <!-- Данные для импорта -->
-      <a data-ship-link href="[Ссылка на zkillboard]" target="_blank">Примеры применения на zkillboard</a> <!-- Данные для импорта -->
+      <img data-ship-avatar src="/images/[аватарка_корабля].png" alt="[Название корабля]" style="max-width: 100%;">
+      <p data-ship-description>[Описание]</p>
+      <div data-ship-link>[Ссылка на zkillboard]</div> <!-- Теперь это контейнер для списка ссылок -->
       <button onclick="copyFitToClipboard('[Фит EFT]')">Скопировать фит EFT</button>
-      <!-- График возможностей -->
       <img src="/images/[график_корабля].png" alt="Графики возможностей [Название корабля]" style="max-width: 100%;">
     </div>
   </main>
-</body>
+</head>
+<style>
+  [data-ship-link] a {
+    display: inline-block;
+    margin-right: 10px;
+    margin-bottom: 5px;
+    color: #2c3e50;
+    text-decoration: none;
+  }
+  [data-ship-link] a:hover {
+    text-decoration: underline;
+  }
+</style>
 </html>
