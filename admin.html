@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Административный инструмент — Генерация страниц кораблей</title>
+  <title>Административный инструмент — Генерация и удаление страниц кораблей</title>
   <link rel="stylesheet" href="/css/style.css">
   <style>
     .form-container { max-width: 800px; margin: 20px auto; padding: 20px; }
@@ -21,6 +21,7 @@
     .links-preview a { display: inline-block; margin-right: 10px; margin-bottom: 5px; color: #2c3e50; text-decoration: none; }
     .links-preview a:hover { text-decoration: underline; }
     .normalized-name { margin-top: 10px; padding: 10px; background-color: #e6f7ff; border-radius: 5px; font-weight: bold; }
+    .delete-section { margin-top: 20px; border-top: 1px solid #ddd; padding-top: 20px; }
   </style>
   <script>
     function normalizeFileName(name) {
@@ -33,7 +34,7 @@
     }
 
     function generateShipPage() {
-      const formData = new FormData(document.querySelector('form'));
+      const formData = new FormData(document.querySelector('#create-form'));
       const shipName = document.getElementById('shipName').value;
       const normalizedName = normalizeFileName(shipName);
       document.getElementById('normalized-name').textContent = `Нормализованное имя файла: ${normalizedName}.html`;
@@ -60,6 +61,37 @@
       });
     }
 
+    function deleteShipPage() {
+      const shipName = prompt('Введите название корабля для удаления (например, "Vexor 100 ab"):');
+      if (!shipName) return;
+
+      const normalizedName = normalizeFileName(shipName);
+      const shipClass = prompt('Введите класс корабля (например, "cruisers"):');
+      if (!shipClass) return;
+
+      fetch('http://localhost:3000/delete-ship', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ shipName: normalizedName, shipClass })
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          alert(data.message);
+          document.getElementById('instructions').innerHTML = `
+            <h3>Успешно!</h3>
+            <p>Страница корабля и связанные файлы удалены. Проверь <a href="https://misterviktor2025.github.io" target="_blank">misterviktor2025.github.io</a> через 1-2 минуты.</p>
+          `;
+        } else {
+          alert('Ошибка: ' + data.error);
+        }
+      })
+      .catch(error => {
+        console.error('Ошибка при удалении данных: ', error);
+        alert('Ошибка при удалении данных на сервер. Проверь консоль.');
+      });
+    }
+
     // Превью ссылок при вводе
     function previewLinks() {
       const zkillLinks = document.getElementById('zkillLink').value.split(/[\n,]+/).map(link => link.trim()).filter(link => link);
@@ -78,7 +110,7 @@
 <body>
   <div class="form-container">
     <h2>Генерация страницы корабля</h2>
-    <form onsubmit="event.preventDefault(); generateShipPage();">
+    <form id="create-form" onsubmit="event.preventDefault(); generateShipPage();">
       <div class="form-group">
         <label for="shipClass">Класс корабля:</label>
         <select id="shipClass" name="shipClass" required>
@@ -117,6 +149,10 @@
       </div>
       <button type="submit">Создать страницу корабля</button>
     </form>
+    <div class="delete-section">
+      <h2>Удаление страницы корабля</h2>
+      <button onclick="deleteShipPage()">Удалить страницу корабля</button>
+    </div>
     <div id="instructions" class="instructions"></div>
   </div>
 </body>
