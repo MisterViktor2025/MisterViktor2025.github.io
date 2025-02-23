@@ -6,31 +6,31 @@
   <title>Каталог кораблей</title>
   <link rel="stylesheet" href="/css/style.css">
   <script>
-function loadNav() {
-  fetch('../nav.html') // Используем более надёжный относительный путь для корня
-    .then(response => {
-      if (!response.ok) throw new Error('Ошибка загрузки nav.html');
-      return response.text();
-    })
-    .then(data => {
-      document.getElementById('nav-placeholder').innerHTML = data;
+    function loadNav() {
+      fetch('../nav.html') // Используем более надёжный относительный путь для корня
+        .then(response => {
+          if (!response.ok) throw new Error('Ошибка загрузки nav.html');
+          return response.text();
+        })
+        .then(data => {
+          document.getElementById('nav-placeholder').innerHTML = data;
 
-      // Логика сворачивания (без звука)
-      const details = document.querySelectorAll('details');
-      details.forEach((detail) => {
-        detail.addEventListener('toggle', () => {
-          if (detail.open) {
-            details.forEach((otherDetail) => {
-              if (otherDetail !== detail) {
-                otherDetail.removeAttribute('open');
+          // Логика сворачивания (без звука)
+          const details = document.querySelectorAll('details');
+          details.forEach((detail) => {
+            detail.addEventListener('toggle', () => {
+              if (detail.open) {
+                details.forEach((otherDetail) => {
+                  if (otherDetail !== detail) {
+                    otherDetail.removeAttribute('open');
+                  }
+                });
               }
             });
-          }
-        });
-      });
-    })
-    .catch(error => console.error(error));
-}
+          });
+        })
+        .catch(error => console.error(error));
+    }
   </script>
 </head>
 <body onload="loadNav()">
