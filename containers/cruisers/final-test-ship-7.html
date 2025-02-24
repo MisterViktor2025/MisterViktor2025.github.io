@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Final Test Ship 7</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <script>
+    function loadNav() {
+      fetch('../../nav.html')
+        .then(response => {
+          if (!response.ok) throw new Error('Ошибка загрузки nav.html');
+          return response.text();
+        })
+        .then(data => {
+          document.getElementById('nav-placeholder').innerHTML = data;
+
+          // Логика сворачивания (без звука)
+          const details = document.querySelectorAll('details');
+          details.forEach((detail) => {
+            detail.addEventListener('toggle', () => {
+              if (detail.open) {
+                details.forEach((otherDetail) => {
+                  if (otherDetail !== detail) {
+                    otherDetail.removeAttribute('open');
+                  }
+                });
+              }
+            });
+          });
+        })
+        .catch(error => console.error(error));
+    }
+
+    // Функция для копирования фита EFT в буфер обмена
+    function copyFitToClipboard(fitText) {
+      navigator.clipboard.writeText(fitText).then(() => {
+        alert("Фит скопирован в буфер обмена!");
+      }).catch(err => {
+        console.error("Ошибка копирования: ", err);
+      });
+    }
+  </script>
+</head>
+<body onload="loadNav()">
+  <header>
+    <a href="/index.html">Главная страница</a>
+    <h1 data-ship-name="Final Test Ship 7">Final Test Ship 7</h1>
+  </header>
+  <div id="nav-placeholder"></div>
+  <main>
+    <div class="container">
+      <h2>Информация о Final Test Ship 7</h2>
+      <img data-ship-avatar src="/images/default_ship.png" alt="Final Test Ship 7" style="max-width: 100%;">
+      <p data-ship-description>Final Test Ship 7Final Test Ship 7Final Test Ship 7</p>
+      <div data-ship-link><a href="Final Test Ship 7Final Test Ship 7" target="_blank">Final Test Ship 7Final Test Ship 7</a></div>
+      <button onclick="copyFitToClipboard('Final Test Ship 7Final Test Ship 7')">Скопировать фит EFT</button>
+      <img src="/images/default_graph.png" alt="Графики возможностей Final Test Ship 7" style="max-width: 100%;">
+    </div>
+  </main>
+</body>
+<style>
+  [data-ship-link] a {
+    display: inline-block;
+    margin-right: 10px;
+    margin-bottom: 5px;
+    color: #2c3e50;
+    text-decoration: none;
+  }
+  [data-ship-link] a:hover {
+    text-decoration: underline;
+  }
+</style>
+</html>
